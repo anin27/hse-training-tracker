@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrations - HSE Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <h2>Petrofac HSE Tracker</h2>
+        <div>
+            <a href="index.html">Dashboard</a>
+            <a href="events.html">Training Events</a>
+            <a href="registrations.html" class="active">Registrations</a>
+        </div>
+    </nav>
+    <div class="container">
+        <h2>Employee Registrations</h2>
+        <div class="form-section"></div>
+        <h3>Register Employee</h3>
+        <input type="text" id="regName" placeholder="e.g. Employee Name">
+        <input type="text" id="regId" placeholder="e.g. Employee ID">
+        <select id="regDept">
+            <option value="">Select Department</option>
+            <option value="Offshore Operations">Offshore Operations</option>
+            <option value="HSE Department">HSE Department</option>
+            <option value="Engineering">Engineering</option>
+        </select>
+        <select id="regEvent">
+            <option value="">Select Training Event</option>
+        </select>
+        <select id="regEvent">
+            <option value="Pending">Pending</option>
+            <option value="Attended">Attended</option>
+            <option value="Absent">Absent</option>
+        </select>
+        <button onclick="registerEmployee()">Register Employee</button>
+        <button onclick="clearRegForm()" class="secondary">Clear</button>
+    
+    <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Employee</th>
+                    <th>Emp ID</th>
+                    <th>Department</th>
+                    <th>Event</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="regTableBody">
+
+            </tbody>
+    </table>
+    </div>   
+    <script src="api.js"></script> 
+    <script src="app.js"></script>
+</body>
+</html>
