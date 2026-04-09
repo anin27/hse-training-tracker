@@ -18,3 +18,15 @@ nav{
     justify-content: space-between;
     align-items: center;
 }
+
+nav a{
+    color: white;
+    text-decoration: none;
+    padding: 8px 16px;
+    margin-left: 10px;
+}
+
+nav a:hover{
+    background-color: lightblue;
+    border-radius: 4px;
+}
