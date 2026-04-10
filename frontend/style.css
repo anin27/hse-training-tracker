@@ -51,6 +51,21 @@ nav a.active {
     margin-bottom: 30px;
 }
 
+.stat-box{
+    flex: 1;
+    background: lightgray;
+    padding: 15px;
+    text-align: center;
+    border-radius: 6px;
+}
+
+.stat-box{
+    display: block;
+    font-size: 2rem;
+    font-weight: bold;
+    color: blue;
+}
+
 .form-section{
     background: lightgray;
     padding: 20px;
