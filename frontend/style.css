@@ -103,3 +103,26 @@ th, td{
     text-align: left;
     border-bottom: 1px solid lightgray;
 }
+
+button { 
+    padding: 8px 16px; 
+    background: rgb(48, 48, 220); 
+    color: white; 
+    border: none; 
+    border-radius: 4px; 
+    cursor: pointer; 
+}
+
+button:hover { background: rgb(48, 48, 220); }
+
+button.secondary { background: gray; }
+
+button.secondary:hover { background: grey; }
+
+.edit-btn { background: rgb(230, 142, 49); }
+
+.edit-btn:hover { background: rgb(230, 142, 49); }
+
+.delete-btn { background: red; }
+
+.delete-btn:hover { background: red; }
