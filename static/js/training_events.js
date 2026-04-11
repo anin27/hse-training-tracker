@@ -47,7 +47,10 @@ function showEvents(){
             <td>${event.date}</td>
             <td>${event.location}</td>
             <td>${event.capacity}</td>
-            <td>Edit | Delete</td>
+            <td>
+            <button onclick="editEvent(${event.id})">Edit</button>
+            <button onclick="deleteEvent(${event.id})">Delete</button>
+            </td>
 
         </tr>
         `;
@@ -62,4 +65,15 @@ function clearForm() {
     document.getElementById("date").value = "";
     document.getElementById("location").value = "";
     document.getElementById("capacity").value = "";
+}
+
+function deleteEvent(id) {
+    for (let i = 0; i < events.length; i++) {
+        if (events[i].id === id){
+            events.splice(i, 1);
+            break;
+        }
+    }
+
+    showEvents();
 }
