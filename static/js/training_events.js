@@ -31,3 +31,30 @@ function saveEvent()
     clearForm();
     
 }
+
+function showEvents(){
+    let tableBody = document.getElementById("eventTableBody");
+    tableBody.innerHTML = "";
+
+    for (let i = 0; i < events.length; i++){
+        let event = events[i];
+
+        tableBody.innerHTML +=`
+        <tr>
+            <td>${event.id}</td>
+            <td>${event.title}</td>
+            <td>${event.category}</td>
+            <td>${event.date}</td>
+            <td>${event.location}</td>
+            <td>${event.capacity}</td>
+            <td>Edit | Delete</td>
+
+        </tr>
+        `;
+    }
+
+
+
+
+
+}
