@@ -24,10 +24,10 @@ function saveEvent()
         }
     }
 
-    if (existingEvent ===null){
+    if (existingEvent === null){
         
         let event ={
-            id: eventIdCounter,
+            id: eventId,
             title: title,
             category: category,
             date: date,
@@ -81,12 +81,12 @@ function editEvent(id){
     for (let i = 0; i < events.length; i++){
         if (events[i].id === id){
             let event = events[i];
-            document.getElementById("eventId").value = "";
-            document.getElementById("title").value = "";
-            document.getElementById("category").value = "";
-            document.getElementById("date").value = "";
-            document.getElementById("location").value = "";
-            document.getElementById("capacity").value = "";
+            document.getElementById("eventId").value = event.id;
+            document.getElementById("title").value = event.title;
+            document.getElementById("category").value = event.category;
+            document.getElementById("date").value = event.date;
+            document.getElementById("location").value = event.location;
+            document.getElementById("capacity").value = event.capacity;
 
             break;
 
