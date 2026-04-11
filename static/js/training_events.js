@@ -53,8 +53,13 @@ function showEvents(){
         `;
     }
 
+}
 
-
-
-
+function clearForm() {
+    document.getElementById("eventId").value = "";
+    document.getElementById("title").value = "";
+    document.getElementById("category").value = "";
+    document.getElementById("date").value = "";
+    document.getElementById("location").value = "";
+    document.getElementById("capacity").value = "";
 }
