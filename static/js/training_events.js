@@ -1,44 +1,38 @@
 let events = [];
 
-
-function saveEvent()
-{
-    let eventId = document.getElementById("eventId").value;
-    let title = document.getElementById("title").value;
+function saveEvent() {
+    let eventId = document.getElementById("eventId").value.trim();
+    let title = document.getElementById("title").value.trim();
     let category = document.getElementById("category").value;
     let date = document.getElementById("date").value;
-    let location = document.getElementById("location").value;
-    let capacity = document.getElementById("capacity").value;
+    let location = document.getElementById("location").value.trim();
+    let capacity = document.getElementById("capacity").value.trim();
 
-    if (eventId === ""){
+    if (eventId === "") {
         return;
-
     }
 
     let existingEvent = null;
 
-    for (let i =0; i < events.length; i++){
-        if (events[i].id === eventId){
+    for (let i = 0; i < events.length; i++) {
+        if (events[i].id === eventId) {
             existingEvent = events[i];
             break;
         }
     }
 
-    if (existingEvent === null){
-        
-        let event ={
+    if (existingEvent === null) {
+        let event = {
             id: eventId,
             title: title,
             category: category,
             date: date,
             location: location,
             capacity: capacity
-
         };
-        
-        events.push(event);
 
-    }   else{
+        events.push(event);
+    } else {
         existingEvent.title = title;
         existingEvent.category = category;
         existingEvent.date = date;
@@ -46,11 +40,10 @@ function saveEvent()
         existingEvent.capacity = capacity;
     }
 
-    alert("Event saved successfully!")
+    alert("Event saved successfully!");
 
     showEvents();
     clearForm();
-    
 }
 
 function showEvents(){
