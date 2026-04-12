@@ -16,9 +16,23 @@ function loadTrainingEvents() {
     let events = [];
     if (savedEvents){
         events = JSON.parse(savedEvents);
+        }
+        
         for (let i = 0, i <events.length; i++){
             let option = "<opion>" + events[1].title + "</options>";
             dropdown.innerHTML += option;
-        }
+        
+    }
+}
+
+function savedRegistrations(){
+    let name = document.getElementById("employeeName").value;
+    let empId = document.getElementById("employeeId").value;
+    let dept = document.getElementById("department").value;
+    let event = document.getElementById("trainingEvent").value;
+    let status = document.getElementById("status").value;
+
+    if (name === "" && empId === "" && dept === "" && event === "" && status === "") {
+        return;
     }
 }
