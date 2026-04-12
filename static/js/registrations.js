@@ -45,5 +45,30 @@ function savedRegistrations(){
         status:        status
     };
 
-    
+    registrations.push(newRegistration);
+    localStorage.setItem("registrations", JSON.stringify(registrations));
+
+    showRegistrations();
+    clearRegistrationForm();
+}
+
+function showRegistrations(){
+    let table = document.getElementById("regTableBody");
+    table.innerHTML ="";
+    for (let i = 0; i < registrations.length; i++) {
+        let r = registrations[i];
+
+        let row = "<tr>";
+        row += "<td>" + r.id            + "</td>";
+        row += "<td>" + r.employeeName  + "</td>";
+        row += "<td>" + r.employeeId    + "</td>";
+        row += "<td>" + r.department    + "</td>";
+        row += "<td>" + r.trainingEvent + "</td>";
+        row += "<td>" + r.status        + "</td>";
+
+        row += "<td><button onclick='removeRegistration(" + i + ")'>Remove</button></td>";
+        row += "</tr>";
+
+        table.innerHTML += row;
+    }
 }
