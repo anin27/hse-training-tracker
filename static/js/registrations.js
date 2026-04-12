@@ -72,3 +72,13 @@ function showRegistrations(){
         table.innerHTML += row;
     }
 }
+
+function removeRegistration(index) {
+    registrations.splice(index, 1);
+
+    localStorage.setItem("registrations", JSON.stringify(registrations));
+
+    showRegistrations();
+
+    alert("Registration removed successfully!");
+}
