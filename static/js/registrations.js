@@ -35,4 +35,15 @@ function savedRegistrations(){
     if (name === "" && empId === "" && dept === "" && event === "" && status === "") {
         return;
     }
+
+    let newRegistration = {
+        id:            registrations.length + 1,
+        employeeName:  name,
+        employeeId:    empId,
+        department:    dept,
+        trainingEvent: event,
+        status:        status
+    };
+
+    
 }
