@@ -1,31 +1,32 @@
-let registrations =[]
+let registrations = [];
 
 let savedRegistrations = localStorage.getItem("registrations");
+
 if (savedRegistrations) {
     registrations = JSON.parse(savedRegistrations);
-    
 }
+
 loadTrainingEvents();
 showRegistrations();
 
 function loadTrainingEvents() {
     let dropdown = document.getElementById("trainingEvent");
-    dropdown.innerHTML = `<option value=""> Select Training Events</option>`;
+    dropdown.innerHTML = '<option value="">Select Training Event</option>';
 
     let savedEvents = localStorage.getItem("events");
     let events = [];
-    if (savedEvents){
+
+    if (savedEvents) {
         events = JSON.parse(savedEvents);
-        }
-        
-        for (let i = 0, i < events.length; i++){
-            let option = "<option>" + events[i].title + "</options>";
-            dropdown.innerHTML += option;
-        
+    }
+
+    for (let i = 0; i < events.length; i++) {
+        let option = "<option value='" + events[i].title + "'>" + events[i].title + "</option>";
+        dropdown.innerHTML += option;
     }
 }
 
-function savedRegistration(){
+function saveRegistration() {
     let name = document.getElementById("employeeName").value;
     let empId = document.getElementById("employeeId").value;
     let dept = document.getElementById("department").value;
@@ -37,12 +38,11 @@ function savedRegistration(){
     }
 
     let newRegistration = {
-        id:            registrations.length + 1,
-        employeeName:  name,
-        employeeId:    empId,
-        department:    dept,
+        employeeName: name,
+        employeeId: empId,
+        department: dept,
         trainingEvent: event,
-        status:        status
+        status: status
     };
 
     registrations.push(newRegistration);
@@ -52,20 +52,19 @@ function savedRegistration(){
     clearRegistrationForm();
 }
 
-function showRegistrations(){
+function showRegistrations() {
     let table = document.getElementById("regTableBody");
-    table.innerHTML ="";
+    table.innerHTML = "";
+
     for (let i = 0; i < registrations.length; i++) {
         let r = registrations[i];
 
         let row = "<tr>";
-        row += "<td>" + r.id            + "</td>";
-        row += "<td>" + r.employeeName  + "</td>";
-        row += "<td>" + r.employeeId    + "</td>";
-        row += "<td>" + r.department    + "</td>";
+        row += "<td>" + r.employeeName + "</td>";
+        row += "<td>" + r.employeeId + "</td>";
+        row += "<td>" + r.department + "</td>";
         row += "<td>" + r.trainingEvent + "</td>";
-        row += "<td>" + r.status        + "</td>";
-
+        row += "<td>" + r.status + "</td>";
         row += "<td><button onclick='removeRegistration(" + i + ")'>Remove</button></td>";
         row += "</tr>";
 
@@ -74,19 +73,21 @@ function showRegistrations(){
 }
 
 function removeRegistration(index) {
-    registrations.splice(index, 1);
+    if (!confirm("Are you sure you want to remove this registration?")) {
+        return;
+    }
 
+    registrations.splice(index, 1);
     localStorage.setItem("registrations", JSON.stringify(registrations));
 
     showRegistrations();
-
     alert("Registration removed successfully!");
 }
 
 function clearRegistrationForm() {
-    document.getElementById("employeeName").value  = "";
-    document.getElementById("employeeId").value    = "";
-    document.getElementById("department").value    = "";
+    document.getElementById("employeeName").value = "";
+    document.getElementById("employeeId").value = "";
+    document.getElementById("department").value = "";
     document.getElementById("trainingEvent").value = "";
     document.getElementById("status").value = "Pending";
 }
