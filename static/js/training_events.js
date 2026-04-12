@@ -1,14 +1,15 @@
 let events = [];
 
-let savedEvents = localStorage.getItem("events");
-if (savedEvents) {
+loadEvents();
 
-    events = JSON.parse(savedEvents);
+async function loadEvents() {
+    let response = await fetch("/events");
+    events = await response.json();
+
+    showEvents();
 }
 
-showEvents();
-
-function saveEvent() {
+async function saveEvent() {
     let eventId = document.getElementById("eventId").value;
     let title = document.getElementById("title").value;
     let category = document.getElementById("category").value;
@@ -20,40 +21,27 @@ function saveEvent() {
         return;
     }
 
-    let existingEvent = null;
+    let event = {
+        id: eventId,
+        title: title,
+        category: category,
+        date: date,
+        location: location,
+        capacity: capacity
+    };
 
-    for (let i = 0; i < events.length; i++) {
-        if (events[i].id === eventId) {
-            existingEvent = events[i];
-            break;
-        }
-    }
-
-    if (existingEvent === null) {
-        let event = {
-            id: eventId,
-            title: title,
-            category: category,
-            date: date,
-            location: location,
-            capacity: capacity
-        };
-
-        events.push(event);
-    } else {
-        existingEvent.title = title;
-        existingEvent.category = category;
-        existingEvent.date = date;
-        existingEvent.location = location;
-        existingEvent.capacity = capacity;
-    }
-
-    localStorage.setItem("events", JSON.stringify(events));
+    await fetch("/events", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(event)
+    });
 
     alert("Event saved successfully!");
 
-    showEvents();
     clearForm();
+    loadEvents();
 }
 
 function showEvents() {
@@ -77,15 +65,14 @@ function showEvents() {
         row += "</tr>";
 
         tableBody.innerHTML += row;
-
     }
-
 }
 
 function editEvent(id) {
     for (let i = 0; i < events.length; i++) {
         if (events[i].id === id) {
             let event = events[i];
+
             document.getElementById("eventId").value = event.id;
             document.getElementById("title").value = event.title;
             document.getElementById("category").value = event.category;
@@ -94,23 +81,16 @@ function editEvent(id) {
             document.getElementById("capacity").value = event.capacity;
 
             break;
-
         }
     }
 }
 
+async function deleteEvent(id) {
+    await fetch("/events/" + id, {
+        method: "DELETE"
+    });
 
-function deleteEvent(id) {
-    for (let i = 0; i < events.length; i++) {
-        if (events[i].id === id) {
-            events.splice(i, 1);
-            break;
-        }
-    }
-
-    localStorage.setItem("events", JSON.stringify(events));
-
-    showEvents();
+    loadEvents();
 }
 
 function clearForm() {
