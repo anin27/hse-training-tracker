@@ -101,3 +101,12 @@ def save_event():
     conn.close()
 
     return jsonify({"message": "Event saved successfully"})
+
+    @app.route("/")
+def training_events_page():
+    return render_template("training_events.html")
+
+
+@app.route("/registrations-page")
+def registrations_page():
+    return render_template("registrations.html")
