@@ -177,3 +177,23 @@ def get_registrations():
         registrations.append(dict(row))
 
     return jsonify(registrations)
+    @app.route("/registrations", methods=["POST"])
+def save_registration():
+    data = request.get_json()
+
+    employee_name = data["employeeName"]
+    employee_id = data["employeeId"]
+    department = data["department"]
+    training_event = data["trainingEvent"]
+    status = data["status"]
+
+    conn = get_db_connection()
+    conn.execute("""
+        INSERT INTO registrations (employee_name, employee_id, department, training_event, status)
+        VALUES (?, ?, ?, ?, ?)
+    """, (employee_name, employee_id, department, training_event, status))
+
+    conn.commit()
+    conn.close()
+
+    return jsonify({"message": "Registration saved successfully"})
