@@ -7,63 +7,69 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <div class="navbar">
+    <!-- Changed: added top navigation bar -->
+    <nav class="navbar">
         <h2>Petrofac HSE Tracker</h2>
-
         <div class="nav-links">
             <a href="/">Training Events</a>
             <a href="/registrations-page" class="active">Registrations</a>
         </div>
-    </div>
+    </nav>
 
-    <div class="container">
-        <h3>Employee Registrations</h3>
+    <main class="page-wrapper">
+        <section class="card">
+            <h2>Employee Registrations</h2>
+            <p class="helper-text">Register employees for training events.</p>
 
-        <div class="form-box">
-            <h3>Register Employee</h3>
+            <div class="form-grid">
+                <input type="text" id="employeeName" placeholder="Employee Name">
+                <input type="text" id="employeeId" placeholder="Employee ID">
 
-            <input type="text" id="employeeName" placeholder="Employee Name">
-            <input type="text" id="employeeId" placeholder="Employee ID">
+                <select id="department">
+                    <option value="">Select Department</option>
+                    <option value="Offshore Operations">Offshore Operations</option>
+                    <option value="HSE Department">HSE Department</option>
+                    <option value="Engineering">Engineering</option>
+                    <option value="Maintenance">Maintenance</option>
+                </select>
 
-            <select id="department">
-                <option value="">Select Department</option>
-                <option value="Offshore Operations">Offshore Operations</option>
-                <option value="HSE Department">HSE Department</option>
-                <option value="Engineering">Engineering</option>
-                <option value="Maintenance">Maintenance</option>
-            </select>
+                <!-- Changed: kept training event dropdown in the form -->
+                <select id="trainingEvent">
+                    <option value="">Select Training Event</option>
+                </select>
 
-            <select id="trainingEvent">
-                <option value="">Select Training Event</option>
-            </select>
-
-            <select id="status">
-                <option value="Pending">Pending</option>
-                <option value="Attended">Attended</option>
-                <option value="Absent">Absent</option>
-            </select>
-            
-            <div>
-                <button onclick="saveRegistration()">Register Employee</button>
-                <button onclick="clearRegistrationForm()">Clear</button>
+                <select id="status">
+                    <option value="Pending">Pending</option>
+                    <option value="Attended">Attended</option>
+                    <option value="Absent">Absent</option>
+                </select>
             </div>
-        </div>
-        
-        <table>
-            <thead>
-                <tr>
-                    <th>Employee</th>
-                    <th>Emp ID</th>
-                    <th>Department</th>
-                    <th>Event</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody id="regTableBody">
-            </tbody>
-        </table>
-    </div>  
+
+            <div class="button-row">
+                <button onclick="saveRegistration()">Save Registration</button>
+                <button class="secondary-button" onclick="clearRegistrationForm()">Clear</button>
+            </div>
+        </section>
+
+        <!-- Changed: removed search, status filter, and refresh controls -->
+        <section class="card">
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Employee</th>
+                            <th>Employee ID</th>
+                            <th>Department</th>
+                            <th>Event</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="regTableBody"></tbody>
+                </table>
+            </div>
+        </section>
+    </main>
 
     <script src="{{ url_for('static', filename='js/registrations.js') }}"></script>
 </body>
