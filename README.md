@@ -20,6 +20,32 @@ The objectives of the project are:
 - to implement CRUD operations for managing records
 - to validate user input before saving data
 
+## Problem Statement
+
+In many organisations, training event details and employee registrations are often managed manually or stored in separate files. This makes it difficult to organise records, update information, and track registrations efficiently.
+
+This led to:
+- data inconsistency
+- difficulty in updating records
+- limited visibility of training events and employee participation
+- time-consuming manual management
+- lack of a centralised digital system
+
+A centralised system was required to manage training events and employee registrations in a more efficient and structured way.
+
+## Proposed Solution
+
+To address this problem, a web-based **Petrofac HSE Tracker** system was developed.
+
+The system provides a simple dashboard where users can:
+- add new training events
+- view all training events
+- update existing event details
+- delete events
+- register employees for training events
+- view all employee registrations
+- delete registrations
+
 ## Main Features
 
 ### Training Events Management
@@ -40,12 +66,79 @@ The objectives of the project are:
 - Persistent data storage using a local SQLite database
 - RESTful API backend with clear success and error responses
 
+## Non-Functional Requirements
+
+### Usability
+- Simple and user-friendly interface
+- Easy navigation between pages
+- Clear display of event and registration data
+
+### Performance
+- Fast API response using Flask and SQLite
+- Efficient loading of events and registrations
+
+### Reliability
+- Data stored securely in SQLite
+- Validation reduces incorrect or incomplete data entry
+- Consistent CRUD operations through backend routes
+
+### Maintainability
+- Clear separation between frontend and backend
+- Modular structure with separate HTML, CSS, and JavaScript files
+- Reusable backend routes for data operations
+
+## Data Requirements and Storage
+
+### Entity: Training Event
+
+Each training event record contains:
+- ID
+- Title
+- Category
+- Date
+- Location
+- Capacity
+
+### Entity: Registration
+
+Each registration record contains:
+- ID
+- Employee Name
+- Employee ID
+- Department
+- Training Event ID
+- Status
+
+### Database
+- SQLite is used as the database
+- Data is stored in two tables:
+  - `training_events`
+  - `registrations`
+
 ## Technologies Used
 
 - **Programming Language:** Python
 - **Backend Framework:** Flask
 - **Database:** SQLite
 - **Frontend:** HTML, CSS, JavaScript
+
+### Frontend
+- HTML – structure of the pages
+- CSS – styling and layout
+- JavaScript – user interaction and API communication
+
+### Backend
+- Python – backend development
+- Flask – route handling and API development
+
+### Database
+- SQLite – data storage
+
+### API
+- REST-style API communication using GET, POST, PUT, and DELETE
+
+The frontend communicates with the backend using API routes, and the backend interacts with the SQLite database.
+
 
 ## CRUD Operations
 
@@ -60,6 +153,29 @@ The objectives of the project are:
 - **Read**: view all registrations
 - **Delete**: remove a registration
 
+## Project Structure
+hse-training-tracker/
+│
+├── app.py
+├── hse_tracker.db
+├── README.md
+├── requirements.txt
+│
+├── static/
+│   ├── css/
+│   │   └── style.css
+│   └── js/
+│       ├── registrations.js
+│       └── training_events.js
+│
+├── templates/
+│   ├── registrations.html
+│   └── training_events.html
+│
+└── tests/
+    └── test_app.py
+
+
 ## API Endpoints
 
 | Method | Endpoint | Description |
@@ -71,6 +187,17 @@ The objectives of the project are:
 | GET | `/registrations` | Retrieve all registrations |
 | POST | `/registrations` | Create a new registration |
 | DELETE | `/registrations/<id>` | Delete a registration |
+
+## System Workflow
+
+-  The user enters data in the frontend form
+-  JavaScript collects the input data
+-  A request is sent to the backend using the Fetch API
+-  The Flask backend validates the input
+-  The backend interacts with the SQLite database
+-  The database stores or retrieves the data
+-  The backend sends a JSON response
+-  The frontend updates the user interface
 
 ## Use of AI Assistance
 
