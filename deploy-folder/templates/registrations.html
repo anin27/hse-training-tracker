@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrations - HSE Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <nav class="navbar">
+        <h1>Petrofac HSE Tracker</h1>
+        <div class="nav-links">
+            <a href="/">Training Events</a>
+            <a href="/registrations-page" class="active">Registrations</a>
+        </div>
+    </nav>
+
+    <main class="page-wrapper">
+        <section class="card">
+            <h2>Employee Registrations</h2>
+            <p class="helper-text">Register employees for training events.</p>
+
+            <div class="form-grid">
+                <input type="text" id="employeeName" placeholder="Employee Name">
+                <input type="text" id="employeeId" placeholder="Employee ID">
+
+                <select id="department">
+                    <option value="">Select Department</option>
+                    <option value="Offshore Operations">Offshore Operations</option>
+                    <option value="HSE Department">HSE Department</option>
+                    <option value="Engineering">Engineering</option>
+                    <option value="Maintenance">Maintenance</option>
+                </select>
+
+                <select id="trainingEvent">
+                    <option value="">Select Training Event</option>
+                </select>
+
+                <select id="status">
+                    <option value="Pending">Pending</option>
+                    <option value="Attended">Attended</option>
+                    <option value="Absent">Absent</option>
+                </select>
+            </div>
+
+            <div class="button-row">
+                <button onclick="saveRegistration()">Save Registration</button>
+                <button class="secondary-button" onclick="clearRegistrationForm()">Clear</button>
+            </div>
+        </section>
+
+        <section class="card">
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Employee</th>
+                            <th>Employee ID</th>
+                            <th>Department</th>
+                            <th>Event</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="regTableBody"></tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/registrations.js') }}"></script>
+</body>
+</html>

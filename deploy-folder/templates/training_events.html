@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Training Events - HSE Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <nav class="navbar">
+        <h1>Petrofac HSE Tracker</h1>
+        <div class="nav-links">
+            <a href="/" class="active">Training Events</a>
+            <a href="/registrations-page">Registrations</a>
+        </div>
+    </nav>
+
+    <main class="page-wrapper">
+        <section class="card">
+            <h2>Training Events</h2>
+            <p class="helper-text">Create, update, and delete training events.</p>
+
+            <div class="form-grid">
+                <input type="text" id="eventId" placeholder="Event ID">
+                <input type="text" id="title" placeholder="Event Title">
+
+                <select id="category">
+                    <option value="">Select Category</option>
+                    <option value="Safety">Safety</option>
+                    <option value="Fire Safety">Fire Safety</option>
+                    <option value="First Aid">First Aid</option>
+                    <option value="Compliance">Compliance</option>
+                </select>
+
+                <input type="date" id="date">
+                <input type="text" id="location" placeholder="Event Location">
+                <input type="number" id="capacity" placeholder="Capacity">
+            </div>
+
+            <div class="button-row">
+                <button id="saveEventButton" onclick="saveEvent()">Save Event</button>
+                <button class="secondary-button" onclick="clearForm()">Clear</button>
+            </div>
+        </section>
+
+        <section class="card">
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Category</th>
+                            <th>Date</th>
+                            <th>Location</th>
+                            <th>Capacity</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="eventTableBody"></tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/training_events.js') }}"></script>
+</body>
+</html>

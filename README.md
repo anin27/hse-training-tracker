@@ -1,66 +1,68 @@
-# Petrofac HSE Training Tracker
+# Petrofac HSE Tracker
 
-This project is a simple web application built to manage HSE (Health, Safety, and Environment) training events and employee registrations. It allows users to create training events, register employees, and manage records using a basic CRUD system.
+Petrofac HSE Tracker is a web application for managing training events and employee registrations.
 
----
+The system allows users to:
 
-## Project Overview
+- create, update, view, and delete training events
+- register employees for training events
+- view all registrations
+- delete registrations
+- store data in an SQLite database
 
-The main goal of this project is to demonstrate a full-stack application using:
+This project was built as a simple training management system using Flask, SQLite, HTML, CSS, and JavaScript.
 
-- Frontend: HTML, CSS, JavaScript  
-- Backend: Python (Flask)  
-- Database: SQLite  
+## Project Purpose
 
-The system stores data in a database and displays it dynamically on the web pages.
+The purpose of this project is to help manage Health, Safety, and Environment training activities in an easy and organized way.
 
----
+Instead of storing event details manually, the application gives a simple web system where a user can:
 
-## Features
+- add training events with an ID, title, category, date, location, and capacity
+- employee can register for a the training event
+- track existing events and employee registrations in table format
 
-### Training Events
-- Add new training events  
-- View all events in a table  
-- Edit existing events  
-- Delete events  
+## Main Features
 
-### Employee Registrations
-- Register employees for training events  
-- Select events from dropdown (loaded dynamically)  
-- View all registrations  
-- Remove registrations  
+- Training event management
+- Employee registration management
+- SQLite database storage
+- Flask backend with API routes
+- Separate pages for events and registrations
+- Input validation for missing fields
+- Event deletion support
+- Registration saving support
+- Training event ID ordering on the events page
+- Automated tests using unittest
 
----
+## Technologies Used
 
-## How the System Works
-
-- The frontend sends data using JavaScript (`fetch`)
-- Flask handles requests and processes the data
-- SQLite database stores all records
-- Data is retrieved and displayed dynamically on the web page
-
----
+- Python
+- Flask
+- SQLite
+- HTML
+- CSS
+- JavaScript
 
 ## Project Structure
-hse-training-tracker/
-│
+
 ├── app.py
 ├── hse_tracker.db
+├── README.md
 ├── requirements.txt
-│
-├── templates/
-│ ├── training_events.html
-│ └── registrations.html
-│
 ├── static/
-│ ├── css/
-│ │ └── style.css
-│ └── js/
-│ ├── training_events.js
-│ └── registrations.js
+│   ├── css/
+│   │   └── style.css
+│   └── js/
+│       ├── registrations.js
+│       └── training_events.js
+├── templates/
+│   ├── registrations.html
+│   └── training_events.html
+└── tests/
+    └── test_app.py
 
 ## Live Demo
 
 The application is deployed and can be accessed here:
-
-
+http://hse-tracker-new-env.eba-cchpksgt.eu-west-1.elasticbeanstalk.com/
