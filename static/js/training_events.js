@@ -65,6 +65,7 @@ function showEvents() {
 
     for (let event of events) {
         let row = document.createElement("tr");
+
         row.innerHTML = `
             <td>${event.id}</td>
             <td>${event.title}</td>
@@ -77,6 +78,7 @@ function showEvents() {
                 <button class="danger-button" onclick="deleteEvent('${event.id}')">Delete</button>
             </td>
         `;
+
         tableBody.appendChild(row);
     }
 }
@@ -110,10 +112,17 @@ async function deleteEvent(id) {
     });
 
     let result = await response.json();
+
+    if (!response.ok) {
+        alert(result.message);
+        return;
+    }
+
     alert(result.message || "Event deleted successfully.");
     clearForm();
     loadEvents();
 }
+
 function clearForm() {
     document.getElementById("eventId").value = "";
     document.getElementById("eventId").disabled = false;

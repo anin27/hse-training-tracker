@@ -5,10 +5,12 @@ app = Flask(__name__)
 
 DATABASE = "hse_tracker.db"
 
+
 def get_db_connection():
     conn = sqlite3.connect(DATABASE)
     conn.row_factory = sqlite3.Row
     return conn
+
 
 def create_tables():
     conn = get_db_connection()
@@ -30,7 +32,7 @@ def create_tables():
             employee_name TEXT NOT NULL,
             employee_id TEXT NOT NULL,
             department TEXT NOT NULL,
-            training_event TEXT NOT NULL,
+            training_event_id TEXT NOT NULL,
             status TEXT NOT NULL
         )
     """)
@@ -41,18 +43,24 @@ def create_tables():
 
 create_tables()
 
+
 @app.route("/")
 def training_events_page():
     return render_template("training_events.html")
+
 
 @app.route("/registrations-page")
 def registrations_page():
     return render_template("registrations.html")
 
+
 @app.route("/events", methods=["GET"])
 def get_events():
     conn = get_db_connection()
-    rows = conn.execute("SELECT * FROM training_events ORDER BY date ASC").fetchall()
+
+    # This orders the training events by ID: PF001, PF002, PF003
+    rows = conn.execute("SELECT * FROM training_events ORDER BY id ASC").fetchall()
+
     conn.close()
 
     events = []
@@ -60,6 +68,7 @@ def get_events():
         events.append(dict(row))
 
     return jsonify(events)
+
 
 @app.route("/events", methods=["POST"])
 def create_event():
@@ -70,9 +79,9 @@ def create_event():
     category = data.get("category", "").strip()
     date = data.get("date", "").strip()
     location = data.get("location", "").strip()
-    capacity = data.get("capacity", "").strip()
+    capacity = data.get("capacity", "")
 
-    if not event_id or not title or not category or not date or not location or not capacity:
+    if not event_id or not title or not category or not date or not location or str(capacity).strip() == "":
         return jsonify({"message": "Please fill in all event fields."}), 400
 
     conn = get_db_connection()
@@ -96,6 +105,7 @@ def create_event():
 
     return jsonify({"message": "Event created successfully."})
 
+
 @app.route("/events/<event_id>", methods=["PUT"])
 def update_event(event_id):
     data = request.get_json()
@@ -104,9 +114,9 @@ def update_event(event_id):
     category = data.get("category", "").strip()
     date = data.get("date", "").strip()
     location = data.get("location", "").strip()
-    capacity = data.get("capacity", "").strip()
+    capacity = data.get("capacity", "")
 
-    if not title or not category or not date or not location or not capacity:
+    if not title or not category or not date or not location or str(capacity).strip() == "":
         return jsonify({"message": "Please fill in all event fields."}), 400
 
     conn = get_db_connection()
@@ -131,12 +141,20 @@ def update_event(event_id):
 
     return jsonify({"message": "Event updated successfully."})
 
+
 @app.route("/events/<event_id>", methods=["DELETE"])
 def delete_event(event_id):
     conn = get_db_connection()
 
-    conn.execute("DELETE FROM registrations WHERE training_event = ?", (event_id,))
-    deleted = conn.execute("DELETE FROM training_events WHERE id = ?", (event_id,))
+    conn.execute(
+        "DELETE FROM registrations WHERE training_event_id = ?",
+        (event_id,)
+    )
+
+    deleted = conn.execute(
+        "DELETE FROM training_events WHERE id = ?",
+        (event_id,)
+    )
 
     conn.commit()
     conn.close()
@@ -146,10 +164,26 @@ def delete_event(event_id):
 
     return jsonify({"message": "Event deleted successfully."})
 
+
 @app.route("/registrations", methods=["GET"])
 def get_registrations():
     conn = get_db_connection()
-    rows = conn.execute("SELECT * FROM registrations ORDER BY id DESC").fetchall()
+
+    rows = conn.execute("""
+        SELECT
+            registrations.id,
+            registrations.employee_name,
+            registrations.employee_id,
+            registrations.department,
+            registrations.training_event_id,
+            registrations.status,
+            training_events.title AS training_event_title
+        FROM registrations
+        JOIN training_events
+            ON registrations.training_event_id = training_events.id
+        ORDER BY registrations.id DESC
+    """).fetchall()
+
     conn.close()
 
     registrations = []
@@ -158,6 +192,7 @@ def get_registrations():
 
     return jsonify(registrations)
 
+
 @app.route("/registrations", methods=["POST"])
 def create_registration():
     data = request.get_json()
@@ -165,18 +200,17 @@ def create_registration():
     employee_name = data.get("employeeName", "").strip()
     employee_id = data.get("employeeId", "").strip()
     department = data.get("department", "").strip()
-    training_event = data.get("trainingEvent", "").strip()
+    training_event_id = data.get("trainingEvent", "").strip()
     status = data.get("status", "").strip()
 
-
-    if not employee_name or not employee_id or not department or not training_event or not status:
+    if not employee_name or not employee_id or not department or not training_event_id or not status:
         return jsonify({"message": "Please fill in all registration fields."}), 400
 
     conn = get_db_connection()
 
     event_exists = conn.execute(
         "SELECT * FROM training_events WHERE id = ?",
-        (training_event,)
+        (training_event_id,)
     ).fetchone()
 
     if not event_exists:
@@ -184,9 +218,9 @@ def create_registration():
         return jsonify({"message": "Selected training event does not exist."}), 400
 
     conn.execute("""
-        INSERT INTO registrations (employee_name, employee_id, department, training_event, status)
+        INSERT INTO registrations (employee_name, employee_id, department, training_event_id, status)
         VALUES (?, ?, ?, ?, ?)
-    """, (employee_name, employee_id, department, training_event, status))
+    """, (employee_name, employee_id, department, training_event_id, status))
 
     conn.commit()
     conn.close()
@@ -211,5 +245,6 @@ def delete_registration(registration_id):
 
     return jsonify({"message": "Registration deleted successfully."})
 
+
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(debug=True)

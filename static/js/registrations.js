@@ -71,16 +71,18 @@ function showRegistrations() {
 
     for (let registration of registrations) {
         let row = document.createElement("tr");
+
         row.innerHTML = `
             <td>${registration.employee_name}</td>
             <td>${registration.employee_id}</td>
             <td>${registration.department}</td>
-            <td>${registration.training_event}</td>
+            <td>${registration.training_event_title}</td>
             <td>${registration.status}</td>
             <td class="action-buttons">
                 <button class="danger-button" onclick="removeRegistration(${registration.id})">Delete</button>
             </td>
         `;
+
         tableBody.appendChild(row);
     }
 }
@@ -96,6 +98,12 @@ async function removeRegistration(id) {
     });
 
     let result = await response.json();
+
+    if (!response.ok) {
+        alert(result.message);
+        return;
+    }
+
     alert(result.message || "Registration removed successfully.");
     clearRegistrationForm();
     loadRegistrations();
