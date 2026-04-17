@@ -64,7 +64,7 @@ The system provides a simple dashboard where users can:
 - Two-page navigation: Training Events and Registrations
 - Form validation on both the frontend and backend to ensure all required fields are completed
 - Persistent data storage using a local SQLite database
-- RESTful API backend with clear success and error responses
+- REST API backend with clear success and error responses
 
 ## Non-Functional Requirements
 
@@ -72,10 +72,6 @@ The system provides a simple dashboard where users can:
 - Simple and user-friendly interface
 - Easy navigation between pages
 - Clear display of event and registration data
-
-### Performance
-- Fast API response using Flask and SQLite
-- Efficient loading of events and registrations
 
 ### Reliability
 - Data stored securely in SQLite
